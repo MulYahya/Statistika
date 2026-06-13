@@ -15,6 +15,7 @@ from sklearn.preprocessing import StandardScaler
 
 from sklearn.svm import SVR
 from sklearn.neighbors import KNeighborsRegressor
+from sklearn.linear_model import LinearRegression
 
 from sklearn.metrics import (
     mean_absolute_error,
@@ -167,12 +168,16 @@ print(grid_knn.best_params_)
 best_svr.fit(X_train_scaled, y_train)
 best_knn.fit(X_train_scaled, y_train)
 
+linear_model = LinearRegression()
+linear_model.fit(X_train_scaled, y_train)
+
 # =====================================================
 # 11. PREDIKSI
 # =====================================================
 
 pred_svr = best_svr.predict(X_test_scaled)
 pred_knn = best_knn.predict(X_test_scaled)
+pred_lr  = linear_model.predict(X_test_scaled)
 
 # =====================================================
 # 12. EVALUASI
@@ -207,15 +212,21 @@ knn_mae, knn_rmse, knn_r2 = evaluate(
     "KNN"
 )
 
+lr_mae, lr_rmse, lr_r2 = evaluate(
+    y_test,
+    pred_lr,
+    "Linear Regression"
+)
+
 # =====================================================
 # 13. TABEL PERBANDINGAN
 # =====================================================
 
 comparison = pd.DataFrame({
-    'Model':['SVR','KNN'],
-    'MAE':[svr_mae,knn_mae],
-    'RMSE':[svr_rmse,knn_rmse],
-    'R2':[svr_r2,knn_r2]
+    'Model':['SVR','KNN','Linear Regression'],
+    'MAE':[svr_mae,knn_mae,lr_mae],
+    'RMSE':[svr_rmse,knn_rmse,lr_rmse],
+    'R2':[svr_r2,knn_r2,lr_r2]
 })
 
 print("\nPERBANDINGAN MODEL")
@@ -262,18 +273,46 @@ plt.title("KNN: Actual vs Predicted")
 plt.show()
 
 # =====================================================
+# 15B. VISUALISASI PREDIKSI LINEAR REGRESSION
+# =====================================================
+
+plt.figure(figsize=(7,5))
+
+plt.scatter(y_test, pred_lr)
+
+plt.plot(
+    [y_test.min(), y_test.max()],
+    [y_test.min(), y_test.max()],
+    'r--'
+)
+
+plt.xlabel("Actual Price")
+plt.ylabel("Predicted Price")
+plt.title("Linear Regression: Actual vs Predicted")
+
+plt.show()
+
+# =====================================================
 # 16. GRAFIK PERBANDINGAN MODEL
 # =====================================================
 
 plt.figure(figsize=(8,5))
 
-plt.bar(
+bars = plt.bar(
     comparison["Model"],
     comparison["R2"]
 )
 
 plt.title("Perbandingan Nilai R²")
 plt.ylabel("R² Score")
+
+for bar in bars:
+    plt.text(
+        bar.get_x() + bar.get_width()/2,
+        bar.get_height(),
+        f"{bar.get_height():.4f}",
+        ha='center'
+    )
 
 plt.show()
 
@@ -313,6 +352,34 @@ sns.barplot(
 )
 
 plt.title("Feature Importance (Permutation Importance)")
+plt.show()
+
+# =====================================================
+# KOEFISIEN LINEAR REGRESSION
+# =====================================================
+
+coef_df = pd.DataFrame({
+    'Feature': X.columns,
+    'Coefficient': linear_model.coef_
+})
+
+coef_df = coef_df.sort_values(
+    by='Coefficient',
+    ascending=False
+)
+
+print("\nKoefisien Linear Regression")
+print(coef_df)
+
+plt.figure(figsize=(8,5))
+
+sns.barplot(
+    data=coef_df,
+    x='Coefficient',
+    y='Feature'
+)
+
+plt.title("Koefisien Linear Regression")
 plt.show()
 
 # =====================================================
