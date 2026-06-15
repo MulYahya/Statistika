@@ -1,0 +1,10 @@
+Berikut adalah daftar beberapa pustaka yang dipakai dalam proyek ini:
+
+pandas
+numpy
+matplotlib
+seaborn
+scikit-learn
+
+untuk mendapatkan pustaka-pustaka tersebut, Anda dapat menggunakan perintah berikut di terminal:
+pip install pandas numpy matplotlib seaborn scikit-learn

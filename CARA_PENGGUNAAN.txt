@@ -1,0 +1,189 @@
+# Cara Penggunaan
+
+## 1. Persiapkan Dataset
+
+Pastikan file dataset **Laptop_price.csv** berada pada folder yang sama dengan file program.
+
+Struktur folder yang disarankan:
+
+```text
+Project/
+│
+├── Laptop_price.csv
+├── regresi_laptop.py
+├── requirements.txt
+└── README.md
+```
+
+Apabila lokasi dataset berbeda, sesuaikan path pada kode berikut:
+
+```python
+df = pd.read_csv("Laptop_price.csv")
+```
+
+Contoh:
+
+```python
+df = pd.read_csv("/content/Laptop_price.csv")
+```
+
+atau
+
+```python
+df = pd.read_csv("dataset/Laptop_price.csv")
+```
+
+---
+
+## 2. Install Dependencies
+
+Pastikan Python telah terpasang pada sistem.
+
+Install seluruh library yang dibutuhkan menggunakan perintah:
+
+```bash
+pip install pandas numpy matplotlib seaborn scikit-learn
+```
+
+Atau jika menggunakan file `requirements.txt`:
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## 3. Menjalankan Program
+
+Buka Terminal atau Command Prompt pada folder project.
+
+Jalankan program dengan perintah:
+
+```bash
+python regresi_laptop.py
+```
+
+atau
+
+```bash
+py regresi_laptop.py
+```
+
+---
+
+## 4. Proses yang Dilakukan Program
+
+Program akan menjalankan beberapa tahapan secara otomatis:
+
+1. Membaca dataset laptop.
+2. Menampilkan informasi dataset.
+3. Melakukan Exploratory Data Analysis (EDA).
+4. Melakukan encoding pada kolom Brand.
+5. Menampilkan heatmap korelasi fitur.
+6. Membagi data menjadi data latih dan data uji.
+7. Melakukan standardisasi fitur.
+8. Melakukan hyperparameter tuning menggunakan GridSearchCV.
+9. Melatih model SVR dan KNN Regression.
+10. Melakukan prediksi harga laptop.
+11. Menghitung nilai MAE, RMSE, dan R² Score.
+12. Menampilkan visualisasi hasil prediksi.
+13. Menampilkan grafik perbandingan performa model.
+14. Menampilkan feature importance.
+
+---
+
+## 5. Output yang Dihasilkan
+
+Program akan menghasilkan:
+
+### Informasi Dataset
+
+```text
+5 DATA PERTAMA
+INFO DATASET
+STATISTIK DESKRIPTIF
+```
+
+### Hasil Hyperparameter Tuning
+
+```text
+Best Parameter SVR
+Best Parameter KNN
+```
+
+### Evaluasi Model
+
+```text
+===== SVR =====
+MAE  : xxxx
+RMSE : xxxx
+R²   : xxxx
+
+===== KNN =====
+MAE  : xxxx
+RMSE : xxxx
+R²   : xxxx
+```
+
+### Tabel Perbandingan
+
+```text
+PERBANDINGAN MODEL
+```
+
+yang berisi:
+
+| Model | MAE | RMSE | R² |
+|---------|---------|---------|---------|
+| SVR | ... | ... | ... |
+| KNN | ... | ... | ... |
+
+### Visualisasi
+
+Program juga akan menampilkan:
+
+- Distribusi Harga Laptop
+- Heatmap Korelasi Fitur
+- Scatter Plot Actual vs Predicted (SVR)
+- Scatter Plot Actual vs Predicted (KNN)
+- Grafik Perbandingan R²
+- Feature Importance
+
+---
+
+## 6. Interpretasi Hasil
+
+Performa model dievaluasi menggunakan tiga metrik:
+
+### MAE (Mean Absolute Error)
+
+Semakin kecil nilai MAE, semakin baik model dalam memprediksi harga laptop.
+
+### RMSE (Root Mean Squared Error)
+
+Semakin kecil nilai RMSE, semakin kecil kesalahan prediksi model.
+
+### R² Score
+
+Interpretasi nilai R²:
+
+| Nilai R² | Interpretasi |
+|-----------|-----------|
+| < 0.50 | Kurang Baik |
+| 0.50 – 0.70 | Cukup |
+| 0.70 – 0.90 | Baik |
+| > 0.90 | Sangat Baik |
+
+Model terbaik dipilih berdasarkan nilai MAE dan RMSE yang paling kecil serta nilai R² yang paling tinggi.
+
+---
+
+## 7. Menghentikan Program
+
+Setelah seluruh proses selesai, program akan menampilkan:
+
+```text
+Program selesai dijalankan.
+```
+
+yang menandakan seluruh tahapan analisis dan pemodelan telah berhasil dilakukan.
